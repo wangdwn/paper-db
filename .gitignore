@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+backups/
+papers/
+.workbuddy/
+paper-db.sqlite
+.DS_Store
