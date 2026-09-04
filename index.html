@@ -83,7 +83,7 @@
   <div>
     <h1>📚 高端论文数据库</h1>
     <div class="sub">广州市地质调查院（海洋发展促进中心）· 基于局/院职能体系</div>
-    <div class="sub" style="margin-top:4px;opacity:.6;">数据更新于 2026-08-03 · 315 篇论文 100% 配中文标题</div>
+    <div class="sub" id="updatedStamp" style="margin-top:4px;opacity:.6;"></div>
   </div>
 </header>
 
@@ -139,6 +139,13 @@ async function init() {
   renderStats();
   renderCategories();
   renderPapers();
+  const stamp = document.getElementById('updatedStamp');
+  if (stamp) {
+    const cnPct = STATS.total ? Math.round(100 * (STATS.with_title_cn || 0) / STATS.total) : 0;
+    stamp.textContent = STATS.last_updated
+      ? `数据更新于 ${STATS.last_updated} · ${STATS.total} 篇论文` + (STATS.with_title_cn ? ` · ${cnPct}% 配中文标题` : '')
+      : `${STATS.total} 篇论文`;
+  }
 }
 
 function renderStats() {
@@ -328,7 +335,7 @@ function showDetail(p) {
     <div class="actions">
       ${p.url ? `<a class="download-btn" href="${p.url}" target="_blank">📥 下载PDF</a>` : ''}
       ${p.doi ? `<a href="https://doi.org/${p.doi}" target="_blank">🔗 DOI链接</a>` : ''}
-      ${p.source_id ? `<a href="https://www.openalex.org/works/${p.source_id}" target="_blank">📖 OpenAlex</a>` : ''}
+      ${p.doi ? `<a href="https://openalex.org/works/doi:${p.doi}" target="_blank">📖 OpenAlex</a>` : ''}
     </div>
   `;
   document.getElementById('detailModal').classList.add('show');
