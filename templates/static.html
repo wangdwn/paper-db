@@ -9,23 +9,22 @@
     --bg: #f5f6fa; --card: #fff; --text: #2c3e50; --text2: #666;
     --primary: #1a5276; --accent: #c0392b; --gold: #d4a017;
     --border: #e0e0e0;
-    --cat-colors: #1a5276, #2980b9, #27ae60, #8e44ad, #c0392b, #d35400, #16a085, #2c3e50, #e67e22, #7f8c8d;
   }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { font-family: -apple-system, "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--bg); color: var(--text); min-height:100vh; }
-  
+
   header { background: linear-gradient(135deg, #1a5276, #1a3a4a); color:#fff; padding: 16px 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:12px; }
   header h1 { font-size:1.3em; letter-spacing:2px; }
   header .sub { font-size:.82em; opacity:.75; }
 
   .layout { display: grid; grid-template-columns: 240px 1fr; min-height:calc(100vh - 64px); }
-  
+
   nav { background:#fff; border-right:1px solid var(--border); padding:12px 0; overflow-y:auto; }
   nav h3 { padding:8px 16px; font-size:.8em; color:var(--text2); text-transform:uppercase; letter-spacing:1px; }
   nav a { display:block; padding:8px 16px; color:var(--text); text-decoration:none; font-size:.9em; border-left:3px solid transparent; transition:.15s; cursor:pointer; }
   nav a:hover, nav a.active { background:#e8f4f8; border-left-color:var(--primary); color:var(--primary); }
   nav .count { float:right; font-size:.78em; color:var(--text2); background:#f0f0f0; padding:1px 7px; border-radius:10px; }
-  
+
   main { padding:20px 24px; overflow-y:auto; }
   .search-bar { display:flex; gap:8px; margin-bottom:20px; }
   .search-bar input { flex:1; padding:10px 16px; border:2px solid var(--border); border-radius:8px; font-size:1em; outline:none; }
@@ -37,7 +36,7 @@
   .stat-card { background:var(--card); padding:14px 20px; border-radius:8px; min-width:140px; box-shadow:0 1px 3px rgba(0,0,0,.06); }
   .stat-card .num { font-size:1.6em; font-weight:700; color:var(--primary); }
   .stat-card .label { font-size:.8em; color:var(--text2); }
-  
+
   .paper-list { display:flex; flex-direction:column; gap:12px; }
   .paper-card { background:var(--card); border-radius:8px; padding:16px 20px; box-shadow:0 1px 3px rgba(0,0,0,.05); transition:.15s; cursor:pointer; }
   .paper-card:hover { box-shadow:0 3px 12px rgba(0,0,0,.1); }
@@ -45,7 +44,6 @@
   .paper-card .meta { font-size:.82em; color:var(--text2); display:flex; gap:16px; flex-wrap:wrap; align-items:center; }
   .paper-card .tag { display:inline-block; padding:2px 8px; border-radius:10px; font-size:.75em; }
   .paper-card .citations { color:var(--gold); font-weight:600; }
-  .paper-card .pdf-badge { color:#27ae60; font-weight:600; }
   .tier-S { background:#ffeaa7; color:#d63031; font-weight:700; }
   .tier-A { background:#dfe6e9; color:#2d3436; font-weight:600; }
   .tier-B { background:#e8f4f8; color:#0984e3; }
@@ -59,10 +57,9 @@
   .modal-content .detail-meta { display:flex; gap:20px; flex-wrap:wrap; margin-bottom:16px; font-size:.9em; color:var(--text2); }
   .modal-content .abstract-full { line-height:1.8; color:var(--text); margin:16px 0; padding:12px; background:#f8f9fa; border-radius:6px; }
   .modal-content .actions { display:flex; gap:8px; margin:16px 0; }
-  .modal-content .actions a, .modal-content .actions button { padding:8px 18px; border-radius:6px; text-decoration:none; font-size:.9em; cursor:pointer; border:1px solid var(--border); background:var(--card); color:var(--primary); transition:.15s; }
+  .modal-content .actions a { padding:8px 18px; border-radius:6px; text-decoration:none; font-size:.9em; cursor:pointer; border:1px solid var(--border); background:var(--card); color:var(--primary); transition:.15s; }
   .modal-content .actions a.download-btn { background:var(--primary); color:#fff; border-color:var(--primary); }
   .modal-content .actions a:hover { opacity:.85; }
-  .modal-content .notes-area { width:100%; min-height:80px; padding:10px; border:1px solid var(--border); border-radius:6px; margin:10px 0; font-family:inherit; resize:vertical; }
   .close-btn { float:right; background:none; border:none; font-size:1.5em; cursor:pointer; color:var(--text2); padding:0 4px; line-height:1; }
   .close-btn:hover { color:var(--accent); }
 
@@ -71,13 +68,6 @@
   .pagination button.active { background:var(--primary); color:#fff; border-color:var(--primary); }
   .pagination button:disabled { opacity:.4; cursor:default; }
 
-  .empty-state { text-align:center; padding:60px 20px; color:var(--text2); }
-  .empty-state .icon { font-size:4em; margin-bottom:16px; }
-  .empty-state p { margin:8px 0; }
-  .empty-state code { background:#eee; padding:3px 8px; border-radius:4px; font-size:.85em; }
-  
-  .loading { text-align:center; padding:40px; color:var(--text2); }
-  
   @media (max-width:768px) {
     .layout { grid-template-columns:1fr; }
     nav { display:flex; overflow-x:auto; padding:8px; border-right:none; border-bottom:1px solid var(--border); }
@@ -100,7 +90,7 @@
 <div class="layout">
   <nav id="sidebar">
     <h3>研究领域</h3>
-    <a class="active" data-cat="" onclick="loadPapers()">📋 全部论文 <span class="count" id="count-all">-</span></a>
+    <a class="active" data-cat="" onclick="selectCat('')">📋 全部论文 <span class="count" id="count-all">-</span></a>
   </nav>
 
   <main>
@@ -111,7 +101,7 @@
 
     <div class="stats-bar" id="statsBar"></div>
 
-    <div id="paperList"><div class="loading">加载中...</div></div>
+    <div id="paperList"><div style="text-align:center;padding:40px;color:#666;">加载中...</div></div>
     <div class="pagination" id="pagination"></div>
   </main>
 </div>
@@ -121,46 +111,63 @@
 </div>
 
 <script>
+// 内嵌数据 — 从JSON文件加载
+let ALL_PAPERS = [];
+let STATS = {};
+let CATEGORIES = [];
 let currentCat = '';
 let currentPage = 1;
+let PER_PAGE = 30;
 let isSearching = false;
 
 async function init() {
-  await loadStats();
-  await loadCategories();
-  await loadPapers();
-}
+  try {
+    const statsResp = await fetch('data/stats.json');
+    STATS = await statsResp.json();
 
-async function loadStats() {
-  const r = await fetch('/api/stats').then(r=>r.json());
+    const catsResp = await fetch('data/categories.json');
+    CATEGORIES = await catsResp.json();
+
+    const papersResp = await fetch('data/papers.json');
+    ALL_PAPERS = await papersResp.json();
+  } catch(e) {
+    console.error('数据加载失败', e);
+    document.getElementById('paperList').innerHTML = '<div style="text-align:center;padding:40px;color:#c0392b;">数据加载失败</div>';
+    return;
+  }
+
+  renderStats();
+  renderCategories();
+  renderPapers();
   const stamp = document.getElementById('updatedStamp');
   if (stamp) {
-    const cnPct = r.total ? Math.round(100 * (r.with_title_cn || 0) / r.total) : 0;
-    stamp.textContent = r.last_updated
-      ? `数据更新于 ${r.last_updated} · ${r.total} 篇论文` + (r.with_title_cn ? ` · ${cnPct}% 配中文标题` : '')
-      : `${r.total} 篇论文`;
+    const cnPct = STATS.total ? Math.round(100 * (STATS.with_title_cn || 0) / STATS.total) : 0;
+    stamp.textContent = STATS.last_updated
+      ? `数据更新于 ${STATS.last_updated} · ${STATS.total} 篇论文` + (STATS.with_title_cn ? ` · ${cnPct}% 配中文标题` : '')
+      : `${STATS.total} 篇论文`;
   }
+}
+
+function renderStats() {
   document.getElementById('statsBar').innerHTML = `
-    <div class="stat-card"><div class="num">${r.total}</div><div class="label">论文总数</div></div>
-    <div class="stat-card"><div class="num" style="color:#c0392b;">${r.cn_count||0}</div><div class="label">🇨🇳 中文论文</div></div>
-    <div class="stat-card"><div class="num">${r.en_count||0}</div><div class="label">🌐 英文论文</div></div>
-    <div class="stat-card"><div class="num">${r.downloaded}</div><div class="label">已下载PDF</div></div>
-    ${r.by_tier ? `<div class="stat-card" style="background:#fef9e7;border:1px solid #d4a017;flex:1;min-width:280px;">
+    <div class="stat-card"><div class="num">${STATS.total}</div><div class="label">论文总数</div></div>
+    <div class="stat-card"><div class="num" style="color:#c0392b;">${STATS.cn_count||0}</div><div class="label">🇨🇳 中文论文</div></div>
+    <div class="stat-card"><div class="num">${STATS.en_count||0}</div><div class="label">🌐 英文论文</div></div>
+    <div class="stat-card"><div class="num">${STATS.downloaded}</div><div class="label">已下载PDF</div></div>
+    ${STATS.by_tier ? `<div class="stat-card" style="background:#fef9e7;border:1px solid #d4a017;flex:1;min-width:280px;">
       <div style="display:flex;gap:8px;flex-wrap:wrap;font-size:.82em;margin-top:4px;">
-        ${r.by_tier.map(t => `<span><b>${t.tier}</b>级: ${t.count}篇</span>`).join(' | ')}
+        ${STATS.by_tier.map(t => `<span><b>${t.tier}</b>级: ${t.count}篇</span>`).join(' | ')}
       </div>
       <div class="label" style="margin-top:4px;">S=SN/大子刊 A=Q1顶刊 B=Q2期刊 C=中文核心</div>
     </div>` : ''}
   `;
 }
 
-async function loadCategories() {
-  const cats = await fetch('/api/categories').then(r=>r.json());
+function renderCategories() {
   const sidebar = document.getElementById('sidebar');
   sidebar.innerHTML = '<h3>研究领域</h3>';
-  sidebar.innerHTML += `<a class="${currentCat===''?'active':''}" data-cat="" onclick="selectCat('')">📋 全部论文 <span class="count">-</span></a>`;
-
-  cats.forEach(c => {
+  sidebar.innerHTML += `<a class="${currentCat===''?'active':''}" data-cat="" onclick="selectCat('')">📋 全部论文 <span class="count">${STATS.total}</span></a>`;
+  CATEGORIES.forEach(c => {
     const a = document.createElement('a');
     a.className = currentCat == c.id ? 'active' : '';
     a.setAttribute('data-cat', c.id);
@@ -170,61 +177,68 @@ async function loadCategories() {
   });
 }
 
-async function loadPapers() {
-  document.getElementById('paperList').innerHTML = '<div class="loading">加载中...</div>';
-  const url = isSearching
-    ? `/api/search?q=${encodeURIComponent(document.getElementById('searchInput').value)}`
-    : `/api/papers?cat=${currentCat}&page=${currentPage}&per_page=30`;
+function getFilteredPapers() {
+  let list = ALL_PAPERS;
+  if (currentCat) {
+    list = list.filter(p => p.category_id == currentCat);
+  }
+  return list;
+}
 
-  const r = await fetch(url).then(r=>r.json());
-  const papers = r.papers;
+function getSearchResults(query) {
+  const q = query.toLowerCase();
+  return ALL_PAPERS.filter(p => {
+    const fields = [p.title, p.title_cn, p.authors, p.journal, p.abstract, p.keywords, p.doi].filter(Boolean);
+    return fields.some(f => f.toLowerCase().includes(q));
+  });
+}
+
+function renderPapers() {
+  let papers;
+  if (isSearching) {
+    const q = document.getElementById('searchInput').value;
+    papers = getSearchResults(q);
+  } else {
+    papers = getFilteredPapers();
+  }
+
+  const total = papers.length;
+  const totalPages = Math.max(1, Math.ceil(total / PER_PAGE));
+  if (currentPage > totalPages) currentPage = totalPages;
+  const start = (currentPage - 1) * PER_PAGE;
+  const pagePapers = papers.slice(start, start + PER_PAGE);
+
   const container = document.getElementById('paperList');
 
-  if (!papers || papers.length === 0) {
-    container.innerHTML = `
-      <div class="empty-state">
-        <div class="icon">📭</div>
-        <p>${isSearching ? '没有找到相关论文' : '数据库还是空的'}</p>
-        <p>在终端运行 <code>python cli.py fetch-cn --cat N</code> 检索中文论文</p>
-        <p>或运行 <code>python cli.py fetch --cat N</code> 检索英文论文</p>
-        <p style="margin-top:12px;">批量检索全部: <code>python cli.py fetch-all</code></p>
-      </div>`;
+  if (pagePapers.length === 0) {
+    container.innerHTML = `<div style="text-align:center;padding:60px 20px;color:#666;">
+      <div style="font-size:4em;margin-bottom:16px;">📭</div>
+      <p>${isSearching ? '没有找到相关论文' : '该分类暂无论文'}</p>
+    </div>`;
     document.getElementById('pagination').innerHTML = '';
     return;
   }
 
   container.innerHTML = '';
-  papers.forEach(p => {
+  pagePapers.forEach(p => {
     const card = document.createElement('div');
     card.className = 'paper-card';
-    card.onclick = () => showDetail(p.id);
+    card.onclick = () => showDetail(p);
 
-    // 语言标识和标题显示
     const isCN = p.language === 'zh';
     const langBadge = isCN ? '🇨🇳 中文' : '🌐 English';
-
-    // 中文论文：标题用中文，如果有英文翻译则显示在下面
-    // 英文论文：标题用英文，如果有中文标题则显示在下面
-    let mainTitle = '';
-    let subTitle = '';
+    let mainTitle = '', subTitle = '';
 
     if (isCN) {
       mainTitle = p.title_cn || p.title || '(无标题)';
-      // 从keywords中提取英文标题（格式：query|EN:english_title）
       if (p.keywords && p.keywords.includes('|EN:')) {
-        const parts = p.keywords.split('|EN:');
-        if (parts.length > 1) {
-          subTitle = parts[1];
-        }
+        subTitle = p.keywords.split('|EN:')[1];
       }
     } else {
       mainTitle = p.title || '(无标题)';
-      if (p.title_cn) {
-        subTitle = p.title_cn;
-      }
+      if (p.title_cn) subTitle = p.title_cn;
     }
 
-    // 清理HTML标签
     mainTitle = mainTitle.replace(/<[^>]+>/g, '');
     subTitle = subTitle ? subTitle.replace(/<[^>]+>/g, '') : '';
 
@@ -240,27 +254,26 @@ async function loadPapers() {
         <span>${p.year||''}</span>
         <span class="citations">📊 ${p.citation_count||0}</span>
         <span class="tag" style="background:#e8f4f8;color:#1a5276;">${p.category_name||''}</span>
-        ${p.is_downloaded ? '<span class="pdf-badge">📄 PDF</span>' : ''}
       </div>
-      ${p.abstract ? `<div class="abstract">${(p.abstract).replace(/<[^>]+>/g,'').slice(0,280)}...</div>` : ''}
+      ${p.abstract ? `<div class="abstract">${p.abstract.replace(/<[^>]+>/g,'').slice(0,280)}...</div>` : ''}
     `;
     container.appendChild(card);
   });
 
   // 分页
-  if (!isSearching && r.pages > 1) {
+  if (totalPages > 1) {
     let pagHTML = '';
     pagHTML += `<button ${currentPage===1?'disabled':''} onclick="goPage(${currentPage-1})">◀</button>`;
-    for (let i = 1; i <= r.pages; i++) {
-      if (i === 1 || i === r.pages || Math.abs(i - currentPage) <= 2) {
+    for (let i = 1; i <= totalPages; i++) {
+      if (i === 1 || i === totalPages || Math.abs(i - currentPage) <= 2) {
         pagHTML += `<button class="${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
       } else if (i === 2 && currentPage > 4) {
         pagHTML += `<button disabled>...</button>`;
-      } else if (i === r.pages-1 && currentPage < r.pages-3) {
+      } else if (i === totalPages-1 && currentPage < totalPages-3) {
         pagHTML += `<button disabled>...</button>`;
       }
     }
-    pagHTML += `<button ${currentPage===r.pages?'disabled':''} onclick="goPage(${currentPage+1})">▶</button>`;
+    pagHTML += `<button ${currentPage===totalPages?'disabled':''} onclick="goPage(${currentPage+1})">▶</button>`;
     document.getElementById('pagination').innerHTML = pagHTML;
   } else {
     document.getElementById('pagination').innerHTML = '';
@@ -274,30 +287,28 @@ function selectCat(id) {
   document.getElementById('searchInput').value = '';
   document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
   document.querySelector(`nav a[data-cat="${id}"]`)?.classList.add('active');
-  loadPapers();
+  renderPapers();
 }
 
 function searchPapers() {
+  const q = document.getElementById('searchInput').value.trim();
+  if (!q) { isSearching = false; renderPapers(); return; }
   isSearching = true;
   currentPage = 1;
   document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
-  loadPapers();
+  renderPapers();
 }
 
 function goPage(n) {
   currentPage = n;
-  loadPapers();
+  renderPapers();
   window.scrollTo({top:0, behavior:'smooth'});
 }
 
-async function showDetail(id) {
-  const p = await fetch(`/api/paper?id=${id}`).then(r=>r.json());
+function showDetail(p) {
   const isCN = p.language === 'zh';
   const langBadge = isCN ? '🇨🇳 中文论文' : '🌐 English Paper';
-
-  // 双语标题
-  let mainTitle = '';
-  let subTitle = '';
+  let mainTitle = '', subTitle = '';
   if (isCN) {
     mainTitle = (p.title_cn || p.title || '(无标题)').replace(/<[^>]+>/g, '');
     if (p.keywords && p.keywords.includes('|EN:')) {
@@ -305,9 +316,7 @@ async function showDetail(id) {
     }
   } else {
     mainTitle = (p.title || '(无标题)').replace(/<[^>]+>/g, '');
-    if (p.title_cn) {
-      subTitle = p.title_cn.replace(/<[^>]+>/g, '');
-    }
+    if (p.title_cn) subTitle = p.title_cn.replace(/<[^>]+>/g, '');
   }
 
   document.getElementById('detailContent').innerHTML = `
@@ -328,23 +337,12 @@ async function showDetail(id) {
       ${p.doi ? `<a href="https://doi.org/${p.doi}" target="_blank">🔗 DOI链接</a>` : ''}
       ${p.doi ? `<a href="https://openalex.org/works/doi:${p.doi}" target="_blank">📖 OpenAlex</a>` : ''}
     </div>
-    <h4 style="margin-top:16px;">✏️ 笔记</h4>
-    <textarea class="notes-area" id="notesBox" onchange="saveNote(${p.id})">${p.notes||''}</textarea>
-    <p style="font-size:.8em;color:var(--text2);margin-top:4px;">修改后自动保存</p>
   `;
   document.getElementById('detailModal').classList.add('show');
 }
 
 function closeDetail() {
   document.getElementById('detailModal').classList.remove('show');
-}
-
-async function saveNote(id) {
-  await fetch('/api/paper/note', {
-    method:'POST',
-    headers:{'Content-Type':'application/json'},
-    body: JSON.stringify({id, notes: document.getElementById('notesBox').value})
-  });
 }
 
 init();

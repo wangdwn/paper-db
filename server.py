@@ -119,9 +119,19 @@ class APIHandler(SimpleHTTPRequestHandler):
             SELECT id, title, title_cn, authors, citation_count, language, journal_tier
             FROM papers ORDER BY CASE WHEN language='zh' THEN 0 ELSE 1 END, citation_count DESC LIMIT 5
         """).fetchall()]
+        last_updated = None
+        try:
+            row = conn.execute("SELECT value FROM meta WHERE key='last_updated'").fetchone()
+            last_updated = row["value"] if row else None
+        except Exception:
+            last_updated = None
+        with_title_cn = conn.execute(
+            "SELECT COUNT(*) as c FROM papers WHERE title_cn IS NOT NULL AND title_cn!=''"
+        ).fetchone()["c"]
         conn.close()
         return {"total": total, "downloaded": downloaded, "cn_count": cn_count, "en_count": en_count,
-                "by_category": by_cat, "by_year": by_year, "by_tier": by_tier, "by_source": by_source, "top": top}
+                "by_category": by_cat, "by_year": by_year, "by_tier": by_tier, "by_source": by_source, "top": top,
+                "last_updated": last_updated, "with_title_cn": with_title_cn}
 
     def _get_papers(self, params):
         conn = get_conn()
