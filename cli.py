@@ -95,6 +95,17 @@ def migrate_db(conn):
                          f"ALTER TABLE papers ADD COLUMN {col} REAL DEFAULT 0")
             conn.commit()
             print(f"  ✅ 已添加 {col} 列")
+    if "doi_verified" not in cols:
+        conn.execute("ALTER TABLE papers ADD COLUMN doi_verified INTEGER DEFAULT 0")
+        conn.commit()
+        print("  ✅ 已添加 doi_verified 列")
+    conn.execute("""
+        CREATE TABLE IF NOT EXISTS meta (
+            key TEXT PRIMARY KEY,
+            value TEXT NOT NULL
+        )
+    """)
+    conn.commit()
 
 
 def get_conn():
@@ -766,12 +777,19 @@ def get_stats():
         WHERE source_type IS NOT NULL AND source_type != ''
         GROUP BY source_type
     """).fetchall()
+    last_updated = None
+    try:
+        row = conn.execute("SELECT value FROM meta WHERE key='last_updated'").fetchone()
+        last_updated = row[0] if row else None
+    except sqlite3.OperationalError:
+        last_updated = None
     conn.close()
     return {
         "total": total, "downloaded": downloaded,
         "cn_count": cn_count, "en_count": en_count,
         "by_tier": by_tier, "by_category": by_cat,
         "by_year": by_year, "by_source": by_source,
+        "last_updated": last_updated,
     }
 
 
@@ -848,6 +866,8 @@ def cli():
   python cli.py list [分类]               按分类浏览
   python cli.py top [N]                   TOP论文（按质量分）
   python cli.py stats                     数据库统计
+  python cli.py refresh                   导入已核验论文并写入更新日期
+  python cli.py export-static             导出 GitHub Pages 静态数据 (docs/)
   python cli.py download <论文ID>          下载论文PDF
   python cli.py download-all               下载所有未下载PDF
   python cli.py categories                 列出分类体系
@@ -987,9 +1007,19 @@ def cli():
             download_pdf(pid)
             time.sleep(2)
 
+    elif cmd == "refresh":
+        from refresh_content import apply_refresh
+        apply_refresh()
+
+    elif cmd == "export-static":
+        from export_static import export_static
+        export_static()
+
     elif cmd == "stats":
         s = get_stats()
         print(f"\n📊 高端论文数据库统计 (v2)")
+        if s.get("last_updated"):
+            print(f"   数据更新于: {s['last_updated']}")
         print(f"   总计: {s['total']} 篇 | 已下载: {s['downloaded']} 篇")
         print(f"   中文: {s['cn_count']} 篇 | 英文: {s['en_count']} 篇")
         if s['by_tier']:

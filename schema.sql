@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS papers (
     rating INTEGER DEFAULT 0,
     notes TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    doi_verified INTEGER DEFAULT 0,
     FOREIGN KEY (category_id) REFERENCES categories(id)
 );
 
@@ -74,6 +75,12 @@ CREATE TABLE IF NOT EXISTS search_log (
     source TEXT,
     result_count INTEGER,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- 库级元数据（含内容最后更新日期）
+CREATE TABLE IF NOT EXISTS meta (
+    key TEXT PRIMARY KEY,
+    value TEXT NOT NULL
 );
 
 -- 初始化分类体系（局+院职能对应）
