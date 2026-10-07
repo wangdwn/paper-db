@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>已修复矿山积水矿坑改造为深水试验设施的功能转化评估框架</title>
+<style>
+:root{
+  --ink:#1a2330;
+  --body:#3a4656;
+  --muted:#6b7686;
+  --paper:#fbfaf7;
+  --card:#ffffff;
+  --ocean:#0f5b8a;
+  --ocean-deep:#0a3d5e;
+  --ocean-soft:#e8f1f7;
+  --line:#e3e6ea;
+  --gold:#b8873a;
+  --gold-soft:#faf3e7;
+  --danger:#b3403a;
+  --ok:#2e7d5b;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:"PingFang SC","Microsoft YaHei","Source Han Sans SC",-apple-system,sans-serif;
+  background:var(--paper);
+  color:var(--body);
+  line-height:1.85;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:880px;margin:0 auto;padding:0 24px}
+
+/* 顶栏 */
+.topbar{
+  background:var(--ocean-deep);
+  color:#d7e6f0;
+  padding:18px 0;
+  font-size:13px;
+  letter-spacing:.5px;
+}
+.topbar .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px}
+.topbar .tag{color:#fff;font-weight:600}
+
+/* 标题区 */
+header{padding:56px 0 28px;border-bottom:3px solid var(--ocean)}
+header .kicker{
+  display:inline-block;font-size:13px;letter-spacing:2px;color:var(--ocean);
+  font-weight:600;margin-bottom:16px;text-transform:uppercase;
+}
+header h1{
+  font-family:"Songti SC","STSong","SimSun",serif;
+  font-size:30px;line-height:1.45;color:var(--ink);font-weight:700;
+  letter-spacing:.5px;margin-bottom:16px;
+}
+header .sub{font-size:15px;color:var(--muted)}
+header .meta{margin-top:18px;font-size:13px;color:var(--muted);display:flex;gap:20px;flex-wrap:wrap}
+
+/* 摘要卡片 */
+.abstract{
+  background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ocean);
+  border-radius:6px;padding:26px 28px;margin:32px 0;
+}
+.abstract h2{
+  font-size:15px;color:var(--ocean);letter-spacing:1px;margin-bottom:14px;
+  font-weight:700;
+}
+.abstract p{font-size:15px;color:var(--body)}
+.abstract b{color:var(--ink)}
+.keywords{margin-top:14px;font-size:13px;color:var(--muted)}
+.keywords .kw{color:var(--ocean);font-weight:600}
+
+/* 章节 */
+section{padding:30px 0}
+section h2{
+  font-family:"Songti SC","STSong","SimSun",serif;
+  font-size:22px;color:var(--ink);margin-bottom:18px;
+  padding-left:12px;border-left:4px solid var(--ocean);line-height:1.4;
+}
+section h3{font-size:17px;color:var(--ink);margin:22px 0 10px;font-weight:700}
+section p{margin:10px 0}
+section b{color:var(--ink)}
+
+/* 表格 */
+.table-wrap{margin:18px 0;overflow-x:auto;border:1px solid var(--line);border-radius:8px}
+table{width:100%;border-collapse:collapse;font-size:14px;min-width:560px}
+thead th{
+  background:var(--ocean);color:#fff;font-weight:600;text-align:left;
+  padding:12px 14px;white-space:nowrap;letter-spacing:.3px;
+}
+tbody td{padding:11px 14px;border-top:1px solid var(--line);vertical-align:top;color:var(--body)}
+tbody tr:nth-child(even){background:#f5f7f9}
+tbody tr:hover{background:var(--ocean-soft)}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;font-family:"SF Mono","Menlo",monospace}
+td.hl{background:var(--gold-soft);font-weight:700;color:var(--ocean-deep)}
+.flag{display:inline-block;padding:2px 9px;border-radius:20px;font-size:12px;font-weight:600;white-space:nowrap}
+.flag.ok{background:#e6f4ec;color:var(--ok)}
+.flag.warn{background:var(--gold-soft);color:var(--gold)}
+.flag.hot{background:#fbe9e7;color:var(--danger)}
+.caption{margin-top:8px;font-size:12.5px;color:var(--muted);text-align:center}
+
+/* 框架图（CSS 实现，不用图片）*/
+.framework{margin:20px 0;padding:22px;background:var(--card);border:1px solid var(--line);border-radius:8px}
+.framework .root{text-align:center;font-weight:700;color:var(--ocean-deep);font-size:16px;padding:12px;background:var(--ocean);color:#fff;border-radius:6px;margin-bottom:14px}
+.framework .levels{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.framework .level{border:1px solid var(--line);border-radius:6px;padding:12px;text-align:center;background:#fbfcfe}
+.framework .level .lname{font-weight:700;color:var(--ocean);font-size:13px;margin-bottom:6px}
+.framework .level .dims{font-size:13px;color:var(--body)}
+
+/* 结论框 */
+.callout{background:var(--ocean-soft);border-radius:8px;padding:18px 22px;margin:18px 0;font-size:15px}
+.callout b{color:var(--ocean-deep)}
+
+footer{padding:36px 0 60px;border-top:1px solid var(--line);margin-top:40px;font-size:12.5px;color:var(--muted)}
+
+@media(max-width:640px){
+  header h1{font-size:24px}
+  .framework .levels{grid-template-columns:1fr}
+  section h2{font-size:19px}
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <span class="tag">论文初稿 v1</span>
+    <span>已修复矿山积水矿坑 · 功能转化评估框架</span>
+    <span>2026-10-07</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+<header>
+  <span class="kicker">Academic Draft · 老矿坑新资源</span>
+  <h1>已修复矿山积水矿坑改造为深水试验设施的功能转化评估框架——以广州增城七镜村为例</h1>
+  <p class="sub">对应广州「老城市新活力」城市战略 · 探索「老矿坑新资源」价值转化路径</p>
+  <div class="meta">
+    <span>目标期刊：中国矿业 / 水文地质工程地质</span>
+    <span>字数：约 5000 字</span>
+    <span>数据缺口：〔待填〕</span>
+  </div>
+</header>
+
+<section class="abstract">
+  <h2>摘 要</h2>
+  <p><b>研究背景：</b>已修复矿山的积水矿坑（以下简称「老矿坑」）是矿山生态修复后遗存的规模化空间载体，对应广州「老城市新活力」的城市更新战略，亟待探索「老矿坑新资源」的价值转化路径。现有研究集中于生态修复、旅游开发、蓄水利用三类路径，均未回答「矿坑除了修复和文旅，还能承担什么专业功能」这一更根本的问题。</p>
+  <p><b>研究方法：</b>本文提出「地质安全—水文条件—工程可行—权属清晰—资源转化—行业打造」六维评估框架，纵向覆盖工程、治理、战略三个层级，横向对每个维度设置量化指标与一票否决条件。</p>
+  <p><b>研究结果：</b>以广州增城七镜村积水矿坑为案例〔待填：打分结果〕，并与四会潜水基地、英国 NDAC 等对标案例横向比较。</p>
+  <p><b>创新价值：</b>首次系统提出积水矿坑向深水试验设施的功能转化评估方法，填补该方向中英文学术文献空白。</p>
+  <div class="keywords"><b>关键词：</b><span class="kw">积水矿坑</span> · <span class="kw">功能转化</span> · <span class="kw">深水试验场</span> · <span class="kw">评估框架</span> · <span class="kw">海洋装备测试</span></div>
+</section>
+
+<section>
+  <h2>一、引言</h2>
+  <p>中国经过数十年矿产资源开发，积累了数量可观的矿山存量空间。广州市已全面完成历史遗留矿山生态修复〔待核：修复完成时间与依据〕，修复后的矿山遗存一批积水矿坑。这些积水矿坑不再是安全隐患与环境包袱，而是等待再激活的存量空间资源——正如广州「老城市新活力」的城市更新逻辑，本文探索「老矿坑新资源」的功能转化路径。</p>
+  <p>在海洋经济领域，广州 2025 年海洋生产总值达 5231.2 亿元、涉海企业 21.3 万家，船舶海工装备、水下机器人、观探测传感器等企业研发测试需求旺盛，但本地缺乏专业深水试验场地，企业需远赴外地开展测试，研发成本高、周期长。积水矿坑的水深、静水环境与深水试验场的需求之间存在天然的匹配空间。</p>
+  <p>矿山生态修复研究长期聚焦「怎么把矿坑环境治理好」，这条主线解决了生态问题，却回避了一个更根本的问题：<b>修复后的积水矿坑，还能承担什么专业功能？</b>这是本文要回答的核心问题。</p>
+</section>
+
+<section>
+  <h2>二、需求端实证：131 家企业的深水诉求</h2>
+  <p>广州 672 家海洋企业中，<b>131 家（19.5%）标注了深水测试需求</b>。这不是零散个案，而是海洋装备测试产业存在的前提。</p>
+
+  <h3>2.1 深度要求：60 米是需求甜点</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>深度要求</th><th class="num">企业数</th><th class="num">占比</th><th>覆盖矿坑</th></tr></thead>
+      <tbody>
+        <tr><td class="hl">60 米</td><td class="num hl">110 家</td><td class="num">83.9%</td><td>怀集矿坑（60m）<span class="flag ok">可覆盖</span></td></tr>
+        <tr><td>30 米</td><td class="num">13 家</td><td class="num">9.9%</td><td>全部矿坑 <span class="flag ok">可覆盖</span></td></tr>
+        <tr><td>100 米</td><td class="num">8 家</td><td class="num">6.1%</td><td>大岗 / 黄村（100m+）<span class="flag hot">稀缺深度</span></td></tr>
+      </tbody>
+    </table>
+    <p class="caption">110 家企业要 60m，广州矿坑 60–100m 水深精准覆盖；8 家要 100m 是护城河卖点</p>
+  </div>
+
+  <h3>2.2 测试类型：设备耐久是最大诉求</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>测试类型</th><th class="num">企业数</th><th class="num">占比</th></tr></thead>
+      <tbody>
+        <tr><td>设备耐久测试</td><td class="num">88 家</td><td class="num">67.2%</td></tr>
+        <tr><td>结构测试</td><td class="num">26 家</td><td class="num">19.8%</td></tr>
+        <tr><td>水密 / 耐压测试</td><td class="num">12 家</td><td class="num">9.2%</td></tr>
+        <tr><td>传感器标定</td><td class="num">7 家</td><td class="num">5.3%</td></tr>
+        <tr><td>待确认</td><td class="num">5 家</td><td class="num">3.8%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>2.3 产业分布：海工装备是核心客群</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>产业</th><th class="num">企业数</th></tr></thead>
+      <tbody>
+        <tr><td class="hl">海洋工程装备</td><td class="num hl">42 家</td></tr>
+        <tr><td>其他涉海产业</td><td class="num">87 家</td></tr>
+        <tr><td>海洋生物医药</td><td class="num">2 家</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>2.4 典型企业诉求</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>企业</th><th class="num">深度</th><th>测试类型</th><th>产业</th></tr></thead>
+      <tbody>
+        <tr><td>中国船舶集团广州船舶工业</td><td class="num">60m</td><td>设备耐久测试</td><td>海洋工程装备</td></tr>
+        <tr><td>中科检测技术服务</td><td class="num">60m</td><td>设备耐久 + 传感器标定</td><td>其他涉海</td></tr>
+        <tr><td>威凯检测 / 认证检测</td><td class="num">60m</td><td>设备耐久测试</td><td>其他涉海</td></tr>
+        <tr><td class="hl">安利（中国）日用品</td><td class="num hl">100m</td><td>水密 / 耐压测试</td><td>海洋生物医药</td></tr>
+        <tr><td>三合探测技术</td><td class="num">30m</td><td>传感器标定</td><td>其他涉海</td></tr>
+        <tr><td>广东广船国际海洋科技研究院</td><td class="num">60m</td><td>设备耐久测试</td><td>海洋工程装备</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <b>关键洞察：</b>企业诉求与矿坑功能规划逐一对应——设备耐久测试（88家）对应怀集矿坑「水下设备耐久测试」、传感器标定（7家）对应黄村矿坑「传感器标定」。这是「需求—供给匹配」的最有力实证，不是拍脑袋规划。
+  </div>
+</section>
+
+<section>
+  <h2>三、研究方法：六维评估框架</h2>
+  <p>本文构建「三层六维」评估框架：工程层（能不能建）、治理层（能不能转）、战略层（能不能放大），逐层递进，各维度设量化指标与一票否决条件。</p>
+
+  <div class="framework">
+    <div class="root">已修复矿山积水矿坑 → 深水试验场 · 功能转化可行性</div>
+    <div class="levels">
+      <div class="level"><div class="lname">工程层 · 能不能建</div><div class="dims">A 地质安全<br>B 水文条件<br>C 工程可行</div></div>
+      <div class="level"><div class="lname">治理层 · 能不能转</div><div class="dims">D 权属清晰<br>E 资源转化</div></div>
+      <div class="level"><div class="lname">战略层 · 能不能放大</div><div class="dims">F 行业打造</div></div>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>维度</th><th class="num">评分</th><th class="num">权重</th><th class="num">加权分</th><th>否决项</th></tr></thead>
+      <tbody>
+        <tr><td>A 地质安全</td><td class="num">待填</td><td class="num">20%</td><td class="num">—</td><td>边坡活动期 / 渗透超标 / 断裂带</td></tr>
+        <tr><td>B 水文条件</td><td class="num">待填</td><td class="num">25%</td><td class="num">—</td><td>水深 &lt;15m / 重金属超标</td></tr>
+        <tr><td>C 工程可行</td><td class="num">待填</td><td class="num">15%</td><td class="num">—</td><td>距居民点 &lt;200m</td></tr>
+        <tr><td>D 权属清晰</td><td class="num">待填</td><td class="num">15%</td><td class="num">—</td><td>矿权纠纷 / 生态红线</td></tr>
+        <tr><td>E 资源转化</td><td class="num">待填</td><td class="num">15%</td><td class="num">—</td><td>—</td></tr>
+        <tr><td>F 行业打造</td><td class="num">待填</td><td class="num">10%</td><td class="num">—</td><td>—</td></tr>
+        <tr><td class="hl">综合判定</td><td class="num hl">待填</td><td class="num">100%</td><td class="num">待填</td><td>五级结论</td></tr>
+      </tbody>
+    </table>
+    <p class="caption">各维度评分 1–5 分，设一票否决条件，综合评分输出五级结论</p>
+  </div>
+</section>
+
+<section>
+  <h2>四、案例研究：广州增城七镜村</h2>
+  <p>七镜村积水矿坑位于广州市增城区，属〔待填：矿坑成因〕。〔待填：面积、最大水深、边坡角、岩性等基础数据〕。</p>
+
+  <h3>4.1 对标案例</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>案例</th><th>地点</th><th>原矿型</th><th>功能</th><th class="num">关键参数</th><th class="num">年份</th></tr></thead>
+      <tbody>
+        <tr><td class="hl">四会潜水基地</td><td>广东肇庆</td><td>采石场</td><td>潜水训练</td><td class="num">三期开发</td><td class="num">2025</td></tr>
+        <tr><td class="hl">NDAC</td><td>英国 Wales</td><td>石灰岩采石场</td><td>潜水 + 军事训练</td><td class="num">深 76–80m</td><td class="num">运营中</td></tr>
+        <tr><td>阜新赛道城</td><td>辽宁阜新</td><td>煤矿坑</td><td>赛车场</td><td class="num">深 100m</td><td class="num">2019</td></tr>
+        <tr><td>上海深坑酒店</td><td>上海佘山</td><td>采石场</td><td>酒店</td><td class="num">深 88m</td><td class="num">2018</td></tr>
+      </tbody>
+    </table>
+    <p class="caption">四会为国内最直接对标，NDAC 为国际最佳对标——证明「矿坑→工程级深水训练设施」已有先例</p>
+  </div>
+
+  <div class="callout">
+    <b>本文案例的差异化：</b>不是旅游潜水，而是<b>工程试验 / 军事训练的深水设施</b>——门槛更高，护城河更深。
+  </div>
+</section>
+
+<section>
+  <h2>五、结果与讨论</h2>
+  <p>〔待填：七镜村评估结论〕</p>
+  <p>六维框架的核心学术贡献不在于「七镜村能不能改」，而在于<b>可复用到其他积水矿坑</b>。广州全市矿坑存量 702 个、可改造 106 个，框架可作为矿坑筛选的标准化工具。</p>
+  <p>矿坑功能转化面临矿权处置、环评、安全监管等制度障碍。建议将「功能转化」纳入矿山生态修复验收标准，形成「老矿坑新资源」的制度化路径，呼应广州「老城市新活力」城市战略。</p>
+</section>
+
+<section>
+  <h2>六、结论与展望</h2>
+  <p>（1）积水矿坑→深水试验设施的功能转化在技术逻辑上成立，六维评估框架提供了可操作的评估方法。</p>
+  <p>（2）七镜村矿坑〔待填：可行性结论〕。</p>
+  <p>（3）六维框架可作为同类积水矿坑功能再定位的标准化工具。</p>
+</section>
+
+<footer>
+  <p>数据来源：广州市地调院矿坑工作报告 · guangzhou-marine-enterprises/data/enterprises.json（深水需求预标值，待人工复核）· 自然资源部第三批矿区生态修复典型案例</p>
+  <p style="margin-top:8px">证据等级：131 家深水需求为自动化预标 + 人工复核中（截至 08-10 仅复核 4 家），引用前须核实。</p>
+</footer>
+
+</div>
+</body>
+</html>
